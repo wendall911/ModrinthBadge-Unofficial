@@ -17,8 +17,11 @@ else:
 
 if ENV and ENV == "prod":
     workers = multiprocessing.cpu_count() * 2 + 1
+    loglevel = 'warning'
 else:
     workers = 3
+    accessLog = '-'
+    loglevel = 'debug'
 
 reload = True
 reload_extra_files = ["templates", "website"]
