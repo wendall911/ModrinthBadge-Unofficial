@@ -1,0 +1,18 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+    h1 {
+        @apply text-3xl lg:text-5xl pb-1 lg:pb-2;
+    }
+    h2 {
+        @apply text-2xl lg:text-4xl pb-1 lg:pb-2;
+    }
+    h3 {
+        @apply text-xl lg:text-3xl pb-1 lg:pb-2;
+    }
+    p {
+        @apply pb-1 lg:pb-2;
+    }
+}
