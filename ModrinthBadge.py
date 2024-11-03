@@ -3,9 +3,7 @@ from flask import render_template
 from flask import request
 from flask import send_file
 from os import getenv
-
-import tkinter
-import tkinter.font as tkFont
+from PIL import ImageFont
 
 import ModrinthApi
 
@@ -19,8 +17,7 @@ if ENV and ENV != "prod":
     api.debug = True
     CACHE_AGE = 0
 
-TKROOT = tkinter.Tk()
-FONT = tkFont.Font(family="DejaVu Sans,Verdana,Geneva,sans-serif", size="11")
+FONT = ImageFont.truetype(getenv('FONT'), 15)
 
 @api.route('/')
 def website():
@@ -53,7 +50,7 @@ def supported_versions(project, style='all', text='Available for'):
     versions = ModrinthApi.getVersions(project)
     versions_text = versions[0] if style == 'latest' else ' | '.join(str(version) for version in versions)
     version_width = getValueWidth(versions_text, 0.82)
-    text_width = FONT.measure(text)
+    text_width = FONT.getlength(text)
     badgeStyle = getBadgeStyle(request.args)
 
     return createBadge(template, versions=versions_text, text=text,
@@ -118,7 +115,7 @@ def formatDownloads(downloads, style, prefix, suffix):
     return replacement.strip()
 
 def getValueWidth(text, offset):
-    return max(FONT.measure(text) * offset, 50)
+    return max(FONT.getlength(text) * offset, 50)
 
 def getColors(invert=False): 
     green = '1BD96A'

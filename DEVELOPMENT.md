@@ -1,11 +1,8 @@
-## Create venv
-  1. python3 -m venv .
-  1. source bin/activate
-  1. pip install -r requirements.txt
+## Install Dependencies Fedora / Rocky Linux 8/9 / RHEL 8/9
+  1. dnf install dejavu-sans-fonts python3-pillow python3-gunicorn python3-dotenv python3-flask
 
 ## Run app
-  1. (ModrinthBadge-Unofficial) ModrinthBadge-Unofficial $ ./bin/gunicorn -c gunicorn.conf.py
-  1. When finished simply: deactivate
+  1. $ gunicorn ModrinthBadge:api -c gunicorn.conf.py
 
 ## Deployment Information
   1. create dotenv
