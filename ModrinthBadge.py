@@ -4,6 +4,7 @@ from flask import request
 from flask import send_file
 from os import getenv
 from PIL import ImageFont
+from PIL import __version__ as PIL__version__
 
 import ModrinthApi
 
@@ -17,7 +18,7 @@ if ENV and ENV != "prod":
     api.debug = True
     CACHE_AGE = 0
 
-FONT = ImageFont.truetype(getenv('FONT'), 15)
+PILLOW_VERSION_INFO = tuple(map(int, PIL__version__.split(".")))
 
 @api.route('/')
 def website():
@@ -50,7 +51,7 @@ def supported_versions(project, style='all', text='Available for'):
     versions = ModrinthApi.getVersions(project)
     versions_text = versions[0] if style == 'latest' else ' | '.join(str(version) for version in versions)
     version_width = getValueWidth(versions_text, 0.82)
-    text_width = FONT.getlength(text)
+    text_width = getLength(text)
     badgeStyle = getBadgeStyle(request.args)
 
     return createBadge(template, versions=versions_text, text=text,
@@ -115,7 +116,18 @@ def formatDownloads(downloads, style, prefix, suffix):
     return replacement.strip()
 
 def getValueWidth(text, offset):
-    return max(FONT.getlength(text) * offset, 50)
+    return max(getLength(text) * offset, 50)
+
+def getLength(text):
+    imageFont = ImageFont.truetype(getenv('FONT'), 15)
+
+    if PILLOW_VERSION_INFO <= (9, 5):
+        tw, th = imageFont.getsize(text)
+
+        return tw
+    else:
+        return imageFont.getlength(text)
+
 
 def getColors(invert=False): 
     green = '1BD96A'
