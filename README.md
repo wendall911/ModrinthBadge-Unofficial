@@ -14,8 +14,8 @@ The base url is
 [https://modrinth.roughness.technology](https://modrinth.roughness.technology). HTTPS Only.
 
   * /{project}.svg: project either id or slug
-    * [![](https://modrinth.roughness.technology/api/actually-harvest.svg)](https://modrinth.com/mod/actually-harvest) -> `https://modrinth.roughness.technology/api/actually-harvest.svg`
-    * [![](https://modrinth.roughness.technology/api/sUbuUC7R.svg)](https://modrinth.com/mod/actually-harvest) -> `https://modrinth.roughness.technology/api/sUbuUC7R.svg`
+    * [![](https://modrinth.roughness.technology/actually-harvest.svg)](https://modrinth.com/mod/actually-harvest) -> `https://modrinth.roughness.technology/actually-harvest.svg`
+    * [![](https://modrinth.roughness.technology/sUbuUC7R.svg)](https://modrinth.com/mod/actually-harvest) -> `https://modrinth.roughness.technology/sUbuUC7R.svg`
   * /{style}\_{project}\_{extra}.svg: {style} can either be 'short' or 'full', extra is optional text to be appended.
     * [![](https://modrinth.roughness.technology/short_actually-harvest.svg)](https://modrinth.com/mod/actually-harvest) -> `https://modrinth.roughness.technology/short_actually-harvest.svg`
     * [![](https://modrinth.roughness.technology/full_actually-harvest_downloads.svg)](https://modrinth.com/mod/actually-harvest) -> `https://modrinth.roughness.technology/full_actually-harvest_downloads.svg`
