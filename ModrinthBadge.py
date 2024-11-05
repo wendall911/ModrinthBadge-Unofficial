@@ -81,6 +81,7 @@ def author(name, style='full', suffix=None, prefix=None):
 def addHeader(response):
     response.cache_control.max_age = CACHE_AGE
     response.add_etag()
+    response.direct_passthrough = False
 
     return response
 
