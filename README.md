@@ -25,3 +25,12 @@ The base url is
 ## Credits
 
 Derived from [CurseForgeBadge Unofficial](https://github.com/way2muchnoise/CurseForgeBadge-Unofficial) No permissions were granted. This is not for profit, but only to support the modding community.
+
+## Developer Notes
+I know that the convention in PEP-8 is to use snake\_case, but the issue is I
+am a polyglot and really only find this in some languages that make sense, like
+writing something in Rust for example. But when using Python, I am almost
+always pairing it with JavaScript, which is typically camelCase. I get lost in
+readability switching between the two, so I prefer camelCase when working on
+web-based projects so my brain doesn't short-circuit. If working on a large
+Python code-base or library, I use PEP-8.
