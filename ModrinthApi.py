@@ -1,10 +1,12 @@
 import datetime
+import html
 import json
 import logging
-from flask import Flask
 import re
 import time
 import urllib.request
+
+from flask import Flask
 from os import getenv
 from urllib.error import HTTPError
 
@@ -48,7 +50,7 @@ def performApiCall():
 
     return opener
 
-def get_project(project):
+def getProject(project):
     project = project.split('?')[0].split('/')[0]
     apiCall = performApiCall()
 
@@ -61,12 +63,12 @@ def get_project(project):
     return json.loads(apiResponse.read())
 
 def getDownloadsProject(project):
-    apiResponse = get_project(project)
+    apiResponse = getProject(project)
 
     return '{:,}'.format(int(apiResponse['downloads'])) if apiResponse else '404'
 
 def getVersions(project):
-    apiResponse = get_project(project)
+    apiResponse = getProject(project)
     keyVersions = [
         "1.6.4",
         "1.7.10",
@@ -99,9 +101,33 @@ def getDownloadsAuthor(name):
             return '404'
 
     results = json.loads(apiResponse.read())
-    author_download_count = 0
+    authorDownloadCount = 0
 
     for result in results:
-        author_download_count += result['downloads']
+        authorDownloadCount += result['downloads']
 
-    return '{:,}'.format(int(author_download_count))
+    return '{:,}'.format(int(authorDownloadCount))
+
+def getAuthorUsernameAndAvatar(name):
+    apiCall = performApiCall()
+
+    try:
+        url = API_URL + '/user/' + name.lower()
+        apiResponse = apiCall.open(url)
+    except HTTPError as e:
+        if e.code == 404:
+            return '404: ' + name, '404'
+
+    if apiResponse:
+        results = json.loads(apiResponse.read())
+        return html.unescape(results['username']).strip(), html.unescape(results['avatar_url']).strip()
+    else:
+        return '404: ' + project, '404'
+
+def getTitleAndSlug(project):
+    apiResponse = getProject(project)
+
+    if apiResponse:
+        return html.unescape(apiResponse['name']).strip(), html.unescape(apiResponse['slug']).strip()
+    else:
+        return '404: ' + project, '404'
