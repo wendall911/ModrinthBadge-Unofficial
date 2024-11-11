@@ -52,8 +52,8 @@ def parseFile(filename, gz=False):
             for line in file.read().split('\n'):
                 parseLine(line)
     else:
-        with gzip.open(args.directory + filename, 'rb') as file:
-            for line in file.read().split('\n'):
+        with gzip.open(args.directory + filename, 'rt') as file:
+            for line in file:
                 parseLine(line)
 
 def parseLine(line):
