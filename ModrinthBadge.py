@@ -3,8 +3,8 @@ from flask import render_template
 from flask import request
 from flask import send_file
 from os import getenv
+import re
 from PIL import ImageFont
-from PIL import __version__ as PIL__version__
 
 import ModrinthApi
 
@@ -18,8 +18,6 @@ if ENV and ENV != "prod":
     api.debug = True
     CACHE_AGE = 0
 
-PILLOW_VERSION_INFO = tuple(map(int, PIL__version__.split(".")))
-
 @api.route('/')
 def website():
     return send_file('website/index.html')
@@ -29,53 +27,33 @@ def website():
 @api.route('/<style>_<project>_<suffix>.svg')
 @api.route('/<style>_<project>_<prefix>_<suffix>.svg')
 def downloads(project, style='full', suffix=None, prefix=None):
-    template = 'modrinthShield.svg'
-    leftColor, rightColor = getColors()
     downloads = ModrinthApi.getDownloadsProject(project)
-    replacement = formatDownloads(downloads, style, prefix, suffix)
-    badgeStyle = getBadgeStyle(request.args)
+    downloadsText = formatDownloads(downloads, style, prefix, suffix)
+    args = request.args.copy()
+    args['logo'] = True
 
-    width = getValueWidth(replacement, 0.9)
-
-    return createBadge(template, downloads=replacement, width=width,
-            totalWidth=(30 + width), offset=(30.5 + width / 2),
-            leftColor=leftColor, rightColor=rightColor,
-            badgeStyle=badgeStyle), 200, {'Content-Type': 'image/svg+xml'}
+    return createBadge('', downloadsText, False, args)
 
 @api.route('/versions/<project>.svg')
 @api.route('/versions/<project>_<style>.svg')
 @api.route('/versions/<text>_<project>_<style>.svg')
 def supported_versions(project, style='all', text='Available for'):
-    template = 'shield.svg'
-    leftColor, rightColor = getColors(True)
     versions = ModrinthApi.getVersions(project)
-    versions_text = versions[0] if style == 'latest' else ' | '.join(str(version) for version in versions)
-    version_width = getValueWidth(versions_text, 0.82)
-    text_width = getLength(text)
-    badgeStyle = getBadgeStyle(request.args)
+    versionsText = versions[0] if style == 'latest' else ' | '.join(str(version) for version in versions)
 
-    return createBadge(template, versions=versions_text, text=text,
-            widthText=text_width, widthVersions=version_width,
-            totalWidth=(version_width + text_width), offsetText=text_width / 2,
-            offsetVersions=version_width / 2, leftColor=leftColor, rightColor=rightColor,
-            badgeStyle=badgeStyle), 200, {'Content-Type': 'image/svg+xml'}
+    return createBadge(text, versionsText, True, request.args)
 
 @api.route('/author/<name>.svg')
 @api.route('/author/<style>_<name>.svg')
 @api.route('/author/<style>_<name>_<suffix>.svg')
 @api.route('/author/<style>_<name>_<prefix>_<suffix>.svg')
 def author(name, style='full', suffix=None, prefix=None):
-    template = 'modrinthShield.svg'
-    leftColor, rightColor = getColors()
     downloads = ModrinthApi.getDownloadsAuthor(name)
-    replacement = formatDownloads(downloads, style, prefix, suffix)
-    width = getValueWidth(replacement, 0.9)
-    badgeStyle = getBadgeStyle(request.args)
+    downloadsText = formatDownloads(downloads, style, prefix, suffix)
+    args = request.args.copy()
+    args['logo'] = True
 
-    return createBadge(template, downloads=replacement, width=width,
-            totalWidth=(30 + width), offset=(30.5 + width / 2),
-            leftColor=leftColor, rightColor=rightColor,
-            badgeStyle=badgeStyle), 200, {'Content-Type': 'image/svg+xml'}
+    return createBadge('', downloadsText, False, args)
 
 @api.after_request
 def addHeader(response):
@@ -84,8 +62,44 @@ def addHeader(response):
 
     return response
 
-def createBadge(template, **kwargs):
-    return render_template(template, **kwargs)
+def createBadge(leftText, rightText, invertColors, requestArgs):
+    template = 'shield.svg'
+    horizPadding = 6
+    leftColor, rightColor = getColors(invertColors)
+    logo = hasLogo(requestArgs)
+    leftMargin = 4
+    logoWidth = 0
+
+    if logo == True:
+        logoWidth = 18
+
+    totalLogoWidth = logoWidth + leftMargin
+    rightTextWidth = getLength(rightText)
+    textWidth = getLength(leftText)
+    badgeStyle = getBadgeStyle(requestArgs)
+    leftWidth = textWidth + 2 * horizPadding + logoWidth
+    rightWidth = rightTextWidth + 2 * horizPadding
+
+    if logo == False:
+        leftMargin = -5
+
+    offsetLeft = 10 * (leftMargin + 0.5 * leftWidth + horizPadding)
+    versionsMargin = (textWidth - 1) + totalLogoWidth + horizPadding
+    offsetRight = 10 * (versionsMargin + 0.5 * rightWidth) + 30
+
+    return renderBadgeTemplate(template, rightText=rightText, leftText=leftText,
+            widthLeft=leftWidth, widthRight=rightWidth,
+            totalWidth=leftWidth + rightWidth, offsetLeft=offsetLeft,
+            leftTextWidth=textWidth * 10, rightTextWidth=rightTextWidth * 10,
+            offsetRight=offsetRight, leftColor=leftColor, rightColor=rightColor,
+            badgeStyle=badgeStyle, logo=logo), 200, {'Content-Type': 'image/svg+xml'}
+
+def renderBadgeTemplate(template, **kwargs):
+    renderedTemplate = render_template(template, **kwargs)
+    renderedTemplate = re.sub(r">\s+<", "><", renderedTemplate)
+    renderedTemplate = renderedTemplate.strip()
+
+    return renderedTemplate
 
 def getBadgeStyle(args):
     badgeStyle = 'rounded'
@@ -94,6 +108,9 @@ def getBadgeStyle(args):
         badgeStyle = 'flat'
 
     return badgeStyle
+
+def hasLogo(args):
+    return 'logo' in args
 
 def formatDownloads(downloads, style, prefix, suffix):
     replacement = ''
@@ -115,19 +132,11 @@ def formatDownloads(downloads, style, prefix, suffix):
 
     return replacement.strip()
 
-def getValueWidth(text, offset):
-    return max(getLength(text) * offset, 50)
-
 def getLength(text):
-    imageFont = ImageFont.truetype(getenv('FONT'), 15)
+    imageFont = ImageFont.truetype(getenv('FONT'), 11)
 
-    if PILLOW_VERSION_INFO <= (9, 5):
-        tw, th = imageFont.getsize(text)
-
-        return tw
-    else:
-        return imageFont.getlength(text)
-
+    length = round(imageFont.getlength(text))
+    return length + 1 if length % 2 == 0 else length
 
 def getColors(invert=False): 
     green = '1BD96A'
