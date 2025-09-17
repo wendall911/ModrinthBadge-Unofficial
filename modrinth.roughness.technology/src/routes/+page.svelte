@@ -46,7 +46,7 @@
         <div class="flex flex-col">
             <h3>/versions/&#123;project&#125;.svg</h3>
             <p>&#123;project&#125; can either be the id or slug</p>
-            <p>Only returns one of: 1.6.4, 1.7.10, 1.8.9, 1.9.4, 1.10.2, 1.11.2, 1.12.2, 1.16.5, 1.18.2, 1.19.2, 1.20.1, 1.21.1, 1.21.3</p>
+            <p>Only returns one of: 1.6.4, 1.7.10, 1.8.9, 1.9.4, 1.10.2, 1.11.2, 1.12.2, 1.16.5, 1.18.2, 1.19.2, 1.20.1, 1.21.1, 1.21.8</p>
             <p>Versions will be updated in the future as they are released/stabilized</p>
             <ul>
                 <li>
@@ -60,7 +60,7 @@
         <div class="flex flex-col">
             <h3>/versions/&#123;text&#125;_&#123;project&#125;_&#123;style&#125;.svg</h3>
             <p>&#123;text&#125; is optional and replaces the default 'Available for' text. &#123;style&#125; can either be 'all' or 'latest'.</p>
-            <p>Only returns one of: 1.6.4, 1.7.10, 1.8.9, 1.9.4, 1.10.2, 1.11.2, 1.12.2, 1.16.5, 1.18.2, 1.19.2, 1.20.1, 1.21.1, 1.21.3</p>
+            <p>Only returns one of: 1.6.4, 1.7.10, 1.8.9, 1.9.4, 1.10.2, 1.11.2, 1.12.2, 1.16.5, 1.18.2, 1.19.2, 1.20.1, 1.21.1, 1.21.8</p>
             <p>Versions will be updated in the future as they are released/stabilized</p>
             <ul>
                 <li>
