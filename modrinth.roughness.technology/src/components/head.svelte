@@ -9,5 +9,5 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={metadata['og:site_name']} />
     <meta property="og:title" content={metadata.title} />
-    <meta property="og:description" content={metadata.descripton} />
+    <meta property="og:description" content={metadata.description} />
 </svelte:head>

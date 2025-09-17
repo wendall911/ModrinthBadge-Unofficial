@@ -9,6 +9,6 @@
             <span class="text-lg">{$page.error?.message ?? 'Page Not Found'}</span>
         </div>
 
-        <a href="/" variant="secondary"> Home </a>
+        <a href="/"> Home </a>
     </article>
 </main>
