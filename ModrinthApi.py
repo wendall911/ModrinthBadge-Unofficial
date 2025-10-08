@@ -82,7 +82,7 @@ def getVersions(project):
         "1.19.2",
         "1.20.1",
         "1.21.1",
-        "1.21.8",
+        "1.21.9",
         "1.22.1",
     ]
     if apiResponse:
