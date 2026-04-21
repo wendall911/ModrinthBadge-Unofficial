@@ -79,13 +79,9 @@ def getVersions(project):
         "1.12.2",
         "1.16.5",
         "1.18.2",
-        "1.19.2",
         "1.20.1",
         "1.21.1",
-        "1.21.9",
-        "1.21.10",
-        "1.21.11",
-        "26.1"
+        "26.1.2"
     ]
     if apiResponse:
         gameVersionsList = apiResponse['game_versions']
