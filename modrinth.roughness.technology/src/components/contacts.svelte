@@ -6,7 +6,7 @@
     $: mail = info.contact.messaging;
 </script>
 
-<div id="contact" />
+<div id="contact"></div>
 
 <div class="flex flex-wrap items-center justify-center gap-4">
     <div class="flex basis-4">

@@ -1,3 +1,4 @@
+
 <script lang="ts">
     import Contacts from '$comp/contacts.svelte';
     import { INFO } from '$content/info';
@@ -33,7 +34,7 @@
         </div>
         <div class="flex flex-col">
             <h3>/&#123;style&#125;_&#123;project&#125;_&#123;extra&#125;.svg</h3>
-            <p>&#123;style&#125; can either be 'short' or 'full', extra is optional text to be appended.
+            <p>&#123;style&#125; can either be 'short' or 'full', extra is optional text to be appended.</p>
             <ul>
                 <li>
                     <a href="https://modrinth.com/mod/actually-harvest"><img src="/short_actually-harvest.svg" alt="short_actually-harvest.svg" class="inline-block" /></a> -&gt; <code>https://modrinth.roughness.technology/short_actually-harvest.svg</code>
@@ -86,6 +87,7 @@
         <div class="flex flex-col">
             <h3>/author/&#123;style&#125;_&#123;project&#125;_&#123;extra&#125;.svg</h3>
             <p>&#123;style&#125; can either be 'short' or 'full', extra is optional text to be appended.</p>
+                <p>&#123;style&#125; can either be 'short' or 'full', extra is optional text to be appended.</p>
             <ul>
                 <li>
                     <a href="https://modrinth.com/user/wendall911"><img src="/author/short_wendall911.svg" alt="short_wendall911.svg" class="inline-block" /></a> -&gt; <code>https://modrinth.roughness.technology/author/short_wendall911.svg</code>

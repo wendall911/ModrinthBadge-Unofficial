@@ -7,12 +7,11 @@
     import { METADATA } from '$content/info';
     import { mode } from 'mode-watcher';
 
-    $: invert = $mode === 'light' ? 'dark:invert' : '';
 </script>
 
 <div class="justify-between flex flex-row w-full">
     <a href="/">
-        <img id="logo" src={INFO.logo} class="ml-2 mr-3 mb-2 sm:h-9 max-h-9 {invert} inline" alt={METADATA.title} />
+        <img id="logo" src={INFO.logo} class="logo-img ml-2 mr-3 mb-2 sm:h-9 max-h-9 inline" alt={METADATA.title} />
         <h3 class="hidden self-center sm:inline mt-2" >
             {METADATA.header_title}
         </h3>
