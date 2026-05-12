@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { navigating } from '$app/stores';
+    import { navigating } from '$app/state';
     import { slide } from 'svelte/transition';
     import { quadInOut } from 'svelte/easing';
 
@@ -12,7 +12,7 @@
     </div>
 </header>
 
-{#if $navigating}
+{#if navigating.to}
     <div class="relative">
         <div
             class="absolute h-1 w-full bg-green-300"

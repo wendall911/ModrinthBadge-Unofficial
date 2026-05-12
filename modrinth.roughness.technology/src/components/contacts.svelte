@@ -2,8 +2,8 @@
     import { INFO as info } from '$content/info';
     import { Mail } from 'lucide-svelte';
 
-    $: accounts = info.contact.accounts;
-    $: mail = info.contact.messaging;
+    const accounts = $derived(info.contact.accounts);
+    const mail = $derived(info.contact.messaging);
 </script>
 
 <div id="contact"></div>

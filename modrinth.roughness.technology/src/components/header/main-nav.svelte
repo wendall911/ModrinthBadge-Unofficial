@@ -1,12 +1,10 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import cn from 'classnames';
     import ModeToggle from '$comp/header/mode-toggle.svelte';
     import { NAVIGATION } from '$content/links';
     import { INFO } from '$content/info';
     import { METADATA } from '$content/info';
-    import { mode } from 'mode-watcher';
-
 </script>
 
 <div class="justify-between flex flex-row w-full">
@@ -22,7 +20,7 @@
                 href={link.url}
                 class={cn(
                     'hover:text-foreground transition-colors pr-4 mb-2 align-middle inline-block',
-                    $page.url.pathname.includes(link.url) ? 'text-foreground' : 'text-foreground/80'
+                    page.url.pathname.includes(link.url) ? 'text-foreground' : 'text-foreground/80'
                 )}
             >
                 {link.name}
