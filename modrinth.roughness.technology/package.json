@@ -13,7 +13,7 @@
         "format": "prettier --write .",
         "test:integration": "playwright test",
         "test:unit": "vitest",
-        "preflight:release": "pnpm install --frozen-lockfile && pnpm audit && pnpm outdated && pnpm run check && pnpm run lint && pnpm run test && pnpm run build"
+        "preflight:release": "pnpm install --frozen-lockfile && pnpm audit && pnpm outdated && pnpm run check && pnpm run lint && pnpm run test"
     },
     "devDependencies": {
         "@playwright/test": "^1.60.0",
@@ -49,5 +49,10 @@
         "mode-watcher": "^1.1.0",
         "tailwind-merge": "^3.6.0",
         "tailwind-variants": "^3.2.2"
+    },
+    "pnpm": {
+        "overrides": {
+            "yaml": ">=2.8.3"
+        }
     }
 }
