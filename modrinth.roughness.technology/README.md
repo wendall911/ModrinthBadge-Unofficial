@@ -18,8 +18,15 @@ npm install -g pnpm
 
 All npm/yarn commands can be replaced with their pnpm equivalents (e.g., `pnpm run dev`, `pnpm run build`).
 
-## Dev Notes
+## Development
+
 ```bash
-pnpm run build # Builds site in ../website
 pnpm run dev   # runs dev instance for dev work on site
+```
+
+## Pre-publishing
+
+```bash
+pnpm run preflight:release  # validates dependencies, lints, tests
+pnpm run build              # builds site in ../website
 ```

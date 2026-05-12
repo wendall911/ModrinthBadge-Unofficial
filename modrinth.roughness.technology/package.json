@@ -12,7 +12,8 @@
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write .",
         "test:integration": "playwright test",
-        "test:unit": "vitest"
+        "test:unit": "vitest",
+        "preflight:release": "pnpm install --frozen-lockfile && pnpm audit && pnpm outdated && pnpm run check && pnpm run lint && pnpm run test && pnpm run build"
     },
     "devDependencies": {
         "@playwright/test": "^1.60.0",
