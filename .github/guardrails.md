@@ -28,6 +28,15 @@ These guardrails apply across all editors and projects to prevent wasted compute
 - Before final response, confirm each sentence-level requirement from the user request is satisfied.
 - If any sentence-level requirement is unsatisfied, continue work instead of finalizing.
 
+## Instruction Compliance Enforcement
+- Treat every sentence in the user request as mandatory scope, not optional guidance.
+- Before execution, build a numbered sentence-level checklist and map each item to one concrete action.
+- Do not finalize with partial completion; all checklist items must be executed or explicitly marked blocked.
+- After each material action, run a verification command and capture outcome before proceeding.
+- Before final response, run a completion gate that lists each checklist item with satisfied or unsatisfied status.
+- If any checklist item is unsatisfied, continue execution instead of finalizing.
+- If blocked, ask one focused question and stop; do not substitute adjacent work for explicit instructions.
+
 ## Content Rules
 - No AI written text.
 - Use direct, specific language and avoid AI-isms/AI-slop patterns.
