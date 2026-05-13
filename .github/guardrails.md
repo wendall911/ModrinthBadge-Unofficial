@@ -4,6 +4,7 @@ These guardrails apply across all editors and projects to prevent wasted compute
 
 ## Execution Scope
 - Follow explicit user requests exactly; do not perform adjacent or substituted actions unless asked.
+- Do not infer additional checks, audits, or validation work beyond the explicit instruction. If the user asks to "add rules," do not audit the project for rule gaps first; only create/add the rules requested. Never perform discovery-and-report work unless explicitly asked.
 - If intent is unclear, infer the most useful likely action and proceed instead of guessing.
 - Treat every user sentence as an instruction-bearing requirement until explicitly resolved.
 - Before first edit, create an internal checklist that maps each sentence/constraint to a concrete action.
@@ -40,9 +41,26 @@ These guardrails apply across all editors and projects to prevent wasted compute
 - If branch names diverge (for example `master` local vs `main` remote), align branches first and confirm commits are on the push target branch before proceeding.
 - Never create or use `master` when the repository default branch is `main`.
 
+## Node Test Script Safety
+- Release/validation commands must use non-watch test modes so commands terminate (for example `vitest run`, not `vitest`).
+- Watch mode must be isolated to explicit opt-in scripts (for example `test:watch`) and must not be used in preflight, CI, or release scripts.
+
+## Release Command Discipline
+- Use project-defined script commands only for release validation and publishing flows.
+- Do not substitute ad-hoc command chains when an official project script exists.
+- Path-pin build/release commands to the intended repository and never rely on inherited terminal cwd.
+- Before running package-manager scripts, verify the expected project manifest exists in that repo; if missing, stop and correct context first.
+
 ## Command Verification
 - Always run `git status` or equivalent after file operations to confirm expected state.
 - Never assume file operations succeeded without explicit verification.
+- Never claim completion until command output verifies the exact requested action in the target repository.
+- Always include the repository path in verification commands for multi-repo work.
+
+## Rule Changes and Governance
+- Any new rule or guardrail change must be explicitly committed to `/home/wendallc/Repos/git/github/minecraft/wendall911/guardrails.md` (the source-of-truth repository) before propagating to project-specific or global files.
+- Verify the commit to wendall911 main is pushed before considering the rule finalized.
+- Only after source-of-truth update is verified should the same rule be added to project-specific `.github/guardrails.md` or global prompt files.
 
 ## Reference
 - Workspace-specific guardrails: check for project-level guardrails in `.github/` folder.
