@@ -57,6 +57,13 @@ These guardrails apply across all editors and projects to prevent wasted compute
 - Never claim completion until command output verifies the exact requested action in the target repository.
 - Always include the repository path in verification commands for multi-repo work.
 
+## TypeScript Project Rules
+- Source code in `src/` and `lib/` directories must be exclusively `.ts` (or `.tsx` for React/Svelte components).
+- No loose `.js` files in source directories unless explicitly justified in a comment near the file explaining the exception.
+- Build configuration files at project root (e.g., `vite.config.js`, `eslint.config.js`, `svelte.config.js`) are permitted.
+- Before auditing a TypeScript project, check for all `.js` files in source and flag them as violations unless explicitly documented.
+- Overly broad `.gitignore` patterns (e.g., `lib/` folder) must not mask source code quality issues; such patterns should be reviewed during audits.
+
 ## Rule Changes and Governance
 - Any new rule or guardrail change must be explicitly committed to `/home/wendallc/Repos/git/github/minecraft/wendall911/guardrails.md` (the source-of-truth repository) before propagating to project-specific or global files.
 - Verify the commit to wendall911 main is pushed before considering the rule finalized.
