@@ -1,9 +1,12 @@
-# Workspace Copilot Instructions
+# Agent Instructions
 
 These instructions are always-on for this repository.
 
 ## Session Startup
-- At the start of every new chat session, read `.github/guardrails.md` before making any changes.
+- At the start of every new chat session, read `.github/guardrails.md` first — unconditionally, before any other file, question, or action. `.github/guardrails.md` is authoritative for this repository.
+- After guardrails are confirmed, read `.github/project-context.md`.
+- The full guardrails apply to every action, response, and decision in the session — not only to changes.
+- This is a subdirectory of ModrinthBadge-Unofficial — do not run git commands from this directory; all git operations belong at the parent repo root.
 - Compare the project rules with the global rules and treat the stricter rule as authoritative.
 - If the user reports a regression, stop forward edits, roll back the breaking change first, verify the rollback, then apply a minimal fix.
 
