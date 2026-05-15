@@ -9,6 +9,7 @@
             <span class="text-lg">{page.error?.message ?? 'Page Not Found'}</span>
         </div>
 
+        <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
         <a href="/"> Home </a>
     </article>
 </main>

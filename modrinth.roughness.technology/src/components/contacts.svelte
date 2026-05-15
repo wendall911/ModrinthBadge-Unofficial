@@ -1,6 +1,6 @@
 <script lang="ts">
     import { INFO as info } from '$content/info';
-    import { Mail } from 'lucide-svelte';
+    import { Mail } from '@lucide/svelte';
 
     const accounts = $derived(info.contact.accounts);
     const mail = $derived(info.contact.messaging);
@@ -19,8 +19,9 @@
             <Mail class="mx-1 h-10 py-1" aria-label="Email" />
         </a>
     </div>
-    {#each accounts as account}
+    {#each accounts as account (account.name)}
         <div class="flex">
+            <!-- eslint-disable svelte/no-navigation-without-resolve -->
             <a
                 href={account.url}
                 target="_blank"
