@@ -18,6 +18,22 @@ This repo contains two separate concerns. Do not conflate them.
 - Has no `.git` folder — it is a child directory of this repo, not a separate repo
 - See `modrinth.roughness.technology/.github/project-context.md` for frontend-specific context
 
+## Runtime Architecture
+
+```
+nginx (reverse proxy)
+  ├── /static, /*.html, /*.js, /*.css  →  serves website/ directly (no Gunicorn)
+  └── /*.svg, /author/*.svg, /versions/*.svg  →  Gunicorn → Flask → badge generation
+```
+
+**`website/`** is the SvelteKit build output directory. It is not committed to git.
+- Populated by running `pnpm run build` inside `modrinth.roughness.technology/`
+- The SvelteKit adapter-static config sets `pages: '../website'` and `assets: '../website'`,
+  writing output directly into the repo root's `website/` directory
+- Flask is configured with `static_folder='website'` — in development it serves this
+  directory directly; in production nginx serves it, bypassing Gunicorn for static files
+- The frontend must be built before the Flask app can serve anything meaningful
+
 ## Branch Convention
 - `main` only; no tags; HEAD is the deployed version
 
@@ -30,7 +46,7 @@ The two components deploy differently — treat them as separate operations:
 
 **Frontend update:**
 1. `git pull` at repo root
-2. Build the frontend (see frontend project-context.md)
+2. `cd modrinth.roughness.technology && pnpm run build` — output lands in `../website/`
 3. Nginx cache clear — no service restart needed
 
 Do not restart the systemd service for frontend-only changes. Do not skip the service restart for API changes.
