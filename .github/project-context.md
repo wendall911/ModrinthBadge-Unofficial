@@ -3,6 +3,16 @@
 ## What This Is
 A service that generates Modrinth badges for mod projects. Hosted at modrinth.roughness.technology on a personal Digital Ocean server.
 
+## Session Start Workflow
+
+Before beginning any work, synchronize with the remote:
+
+1. `git fetch origin` — check for remote changes without modifying the working tree
+2. `git status` — verify the local repository is clean before rebasing
+3. `git rebase origin/main` — apply any remote changes; fast-forwards if no local commits diverge
+
+External PR contributions are possible. Always fetch before starting work.
+
 ## Structure — Two Distinct Components
 This repo contains two separate concerns. Do not conflate them.
 
