@@ -1,19 +1,19 @@
-# ModrinthBadge-Unofficial — Project Context
+# ModrinthBadge-Unofficial -- Project Context
 
 ## What This Is
 A service that generates Modrinth badges for mod projects. Hosted at modrinth.roughness.technology on a personal Digital Ocean server.
 
 ## Session Start Workflow
 
-Before beginning any work, synchronize with the remote:
+Before beginning any work:
 
-1. `git fetch origin` — check for remote changes without modifying the working tree
-2. `git status` — verify the local repository is clean before rebasing
-3. `git rebase origin/main` — apply any remote changes; fast-forwards if no local commits diverge
+1. `git status` -- verify the local repository is clean and confirm the current branch
+2. `git pull` -- pull remote changes; fast-forwards if no local commits diverge
+3. If git warns that it cannot automatically rebase, run `git rebase` directly
 
-External PR contributions are possible. Always fetch before starting work.
+External PR contributions are possible. Always pull before starting work.
 
-## Structure — Two Distinct Components
+## Structure -- Two Distinct Components
 This repo contains two separate concerns. Do not conflate them.
 
 ### Python API (repo root)
@@ -25,7 +25,7 @@ This repo contains two separate concerns. Do not conflate them.
 ### SvelteKit Frontend (`modrinth.roughness.technology/`)
 - SvelteKit + TypeScript + Tailwind CSS, built statically and served by nginx
 - pnpm for package management
-- Has no `.git` folder — it is a child directory of this repo, not a separate repo
+- Has no `.git` folder -- it is a child directory of this repo, not a separate repo
 - See `modrinth.roughness.technology/.github/project-context.md` for frontend-specific context
 
 ## Runtime Architecture
@@ -40,7 +40,7 @@ nginx (reverse proxy)
 - Populated by running `pnpm run build` inside `modrinth.roughness.technology/`
 - The SvelteKit adapter-static config sets `pages: '../website'` and `assets: '../website'`,
   writing output directly into the repo root's `website/` directory
-- Flask is configured with `static_folder='website'` — in development it serves this
+- Flask is configured with `static_folder='website'` -- in development it serves this
   directory directly; in production nginx serves it, bypassing Gunicorn for static files
 - The frontend must be built before the Flask app can serve anything meaningful
 
@@ -48,7 +48,7 @@ nginx (reverse proxy)
 - `main` only; no tags; HEAD is the deployed version
 
 ## Deployment (Digital Ocean personal server)
-The two components deploy differently — treat them as separate operations:
+The two components deploy differently -- treat them as separate operations:
 
 **Python API update:**
 1. `git pull` at repo root
@@ -56,7 +56,7 @@ The two components deploy differently — treat them as separate operations:
 
 **Frontend update:**
 1. `git pull` at repo root
-2. `cd modrinth.roughness.technology && pnpm run build` — output lands in `../website/`
-3. Nginx cache clear — no service restart needed
+2. `cd modrinth.roughness.technology && pnpm run build` -- output lands in `../website/`
+3. Nginx cache clear -- no service restart needed
 
 Do not restart the systemd service for frontend-only changes. Do not skip the service restart for API changes.
