@@ -83,7 +83,7 @@
             <p>&#123;project&#125; can either be the id or slug</p>
             <p>
                 Only returns one of: 1.6.4, 1.7.10, 1.8.9, 1.9.4, 1.10.2, 1.11.2, 1.12.2, 1.16.5,
-                1.18.2, 1.20.1, 1.21.1, 26.1.2
+                1.18.2, 1.20.1, 1.21.1, 26.1.2, 26.2
             </p>
             <p>Versions will be updated in the future as they are released/stabilized</p>
             <ul>
@@ -118,7 +118,7 @@
             </p>
             <p>
                 Only returns one of: 1.6.4, 1.7.10, 1.8.9, 1.9.4, 1.10.2, 1.11.2, 1.12.2, 1.16.5,
-                1.18.2, 1.20.1, 1.21.1, 26.1.2
+                1.18.2, 1.20.1, 1.21.1, 26.1.2, 26.2
             </p>
             <p>Versions will be updated in the future as they are released/stabilized</p>
             <ul>
